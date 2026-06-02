@@ -1,0 +1,154 @@
+Project Synopsis
+
+Title of the Project
+Lost and Found System
+
+Introduction
+The Lost and Found System is a web-based application designed to streamline how institutions, organizations, and public places manage lost and found items. The system bridges the gap between individuals who have lost belongings and those who have found items. Through intelligent matching, administrative verification, and secure communication, it aims to return items to their rightful owners efficiently and transparently.
+
+Objectives
+- Provide a centralized digital platform for reporting and tracking lost and found items.
+- Reduce manual effort and streamline the recovery process.
+- Ensure accuracy and security in item matching through admin verification.
+- Notify users about matched items via system alerts, emails, or SMS.
+- Enforce transparency: found items must be deposited in the staff room within 5–7 days.
+- Define a verification SLA: admin reviews matches within 15 days.
+
+Problem Statement
+Traditional lost-and-found processes are manual, fragmented, and lack accountability. Students and staff struggle to report and trace items promptly, while finders have no structured process to submit items. This leads to delays, low recovery rates, and loss of valuable belongings. There is a need for a secure, centralized, and automated solution with clear roles and timelines.
+
+Proposed System
+The system provides an end-to-end workflow to report lost and found items, automatically generate potential matches, and route them for administrator review. Admins validate matches within 15 days and, upon approval, both parties are notified and contact details are shared securely. Found items must be deposited in the staff room within 5–7 days for safekeeping and verification.
+
+Scope
+- Users: Students, staff, and authorized community members.
+- Admins: Institution-appointed moderators who validate matches and oversee operations.
+- Channels: Web application; optional email/SMS for notifications.
+
+Functional Requirements
+- User registration and login.
+- Report Lost Item: item name, description, date, location (optional: brand, color, image).
+- Report Found Item: item name, description, date, location (optional: condition, image).
+- Matching Engine: auto-detect potential matches using name/description/date/location similarity.
+- Admin Panel: verify/approve/reject matches within 15 days; manage reports and users.
+- User Dashboard: view own reports, match status (Pending, Matched, Accepted, Rejected).
+- Notifications: system alerts and email/SMS notifications on key events.
+- Data Management: secure storage and retrieval for users, items, and matches.
+
+Non-Functional Requirements
+- Security: password hashing, prepared statements, role-based access control.
+- Privacy: protect user contact details; share only upon admin approval.
+- Performance: responsive UI; efficient queries for list and match views.
+- Reliability: consistent status management and durable data storage.
+- Scalability: handle growing numbers of users and reports.
+- Usability: clean, accessible interface; mobile-friendly pages.
+- Compliance: audit trail for admin decisions; retention and backup policies.
+
+System Architecture / Flow (High-Level)
+1) User registers/logs in to the system.
+2) User reports a lost or found item.
+3) System runs matching to find potential pairs.
+4) Admin reviews the matched list and approves/rejects within 15 days.
+5) Approved matches update user dashboards and unlock contact sharing.
+6) Users receive notifications with contact details and next steps.
+7) Found items are deposited in the staff room for verification within 5–7 days.
+
+Data Flow Diagrams (DFD)
+
+Level 0: Context Diagram
+[User] → (Lost & Found System) → [Notifications]
+[Admin] ↔ (Lost & Found System) ↔ [Data Stores: Users, Lost Items, Found Items, Matches]
+
+Level 1: Major Processes and Data Stores
+1) User Management
+   - Inputs: Registration data, login credentials
+   - Outputs: Authenticated session, access permissions
+   - Data Stores: Users
+
+2) Item Reporting
+   - Inputs: Lost/Found item details (name, description, date, location)
+   - Outputs: Stored reports, acknowledgments
+   - Data Stores: Lost Items, Found Items
+
+3) Matching Engine
+   - Inputs: Lost Items, Found Items
+   - Process: Similarity checks (name/description/date/location)
+   - Outputs: Candidate Matches (Pending)
+   - Data Stores: Matches
+
+4) Admin Review
+   - Inputs: Candidate Matches
+   - Process: Verify details; Approve/Reject within 15 days
+   - Outputs: Status updates (Accepted/Rejected), audit trail
+   - Data Stores: Matches
+
+5) Notification & Contact Sharing
+   - Inputs: Match decisions
+   - Outputs: System alerts, email/SMS notifications, shared contact details (post-approval)
+   - Data Stores: Matches (status), Users (contact)
+
+Level 2: Detailed Sub-Processes
+A) User Management
+   A1) Register User → validate inputs → create account → confirmation
+   A2) Authenticate User → verify credentials → create session → role-based access
+
+B) Lost Item Reporting
+   B1) Capture lost item details → validate → store in Lost Items → acknowledgment
+   B2) (Trigger) Matching Engine run → generate candidate matches
+
+C) Found Item Reporting
+   C1) Capture found item details → validate → store in Found Items → acknowledgment
+   C2) (Policy) Deposit in staff room within 5–7 days → mark verified
+
+D) Matching Engine
+   D1) Fetch recent Lost and Found items
+   D2) Compute similarity (name/keywords/location/date)
+   D3) Create/Update candidate matches with status=Pending
+
+E) Admin Review
+   E1) Load pending matches with item context
+   E2) Review details and evidence (optionally images/verification)
+   E3) Approve or Reject within 15 days
+   E4) Update match status; log decision and timestamp
+
+F) Notification & Contact Sharing
+   F1) On approval, notify both parties via system/email/SMS
+   F2) Unlock contact details securely to involved users
+   F3) Provide guidance for handover (time/place, staff room)
+
+Data Dictionary (Brief)
+- Users: id, fullname, email, username/id, phone, (hashed password)
+- Lost Items: id, user_id, item_name, description, date_lost, location, (image optional)
+- Found Items: id, user_id, item_name, description, date_found, location, (image optional), deposit_status
+- Matches: id, lost_item_id, found_item_id, status (Pending/Accepted/Rejected), timestamps, reviewer
+
+Use Cases (Representative)
+- UC1 Register/Login: User creates account and signs in.
+- UC2 Report Lost Item: User submits details for a lost item.
+- UC3 Report Found Item: Finder submits details; deposits item within 5–7 days.
+- UC4 View Matches: User views match status; admin sees pending list.
+- UC5 Approve Match: Admin validates and approves within 15 days.
+- UC6 Notify and Share Contacts: System notifies both users and shares contact info after approval.
+
+Tools and Technologies Used
+- Frontend: HTML, CSS, JavaScript
+- Backend: PHP
+- Database: MySQL
+- Server: XAMPP/WAMP (Apache, PHP, MySQL)
+- Notifications: Email/SMS API
+
+Implementation Policies & Constraints
+- Privacy: Contact details are disclosed only after admin approval.
+- SLA: Admin verification to be concluded within 15 days of match creation.
+- Safety: Found items must be deposited in the staff room within 5–7 days.
+- Auditability: All admin actions (approve/reject) are logged with timestamps.
+
+Future Scope
+- AI-based image recognition for match assistance.
+- Mobile apps (Android/iOS) for on-the-go reporting and alerts.
+- QR code-based submission tracking for found items.
+- Integration with institutional ID systems for faster verification.
+- Role-based analytics dashboards for trends and hotspots.
+
+Conclusion
+The Lost and Found System modernizes item recovery with a secure, automated, and transparent process. By combining user reporting, intelligent matching, and admin verification with clear timelines and notifications, it significantly improves recovery rates, reduces manual overhead, and enhances user trust and satisfaction across institutions.

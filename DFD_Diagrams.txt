@@ -1,0 +1,305 @@
+LOST AND FOUND SYSTEM - DATA FLOW DIAGRAMS (TEXT FORMAT)
+================================================================
+
+LEVEL 0 DFD - CONTEXT DIAGRAM
+=============================
+
+                    ┌─────────────────────────────────────┐
+                    │         EXTERNAL ENTITIES            │
+                    │                                     │
+                    │  ┌─────────────┐ ┌─────────────┐   │
+                    │  │    User     │ │   Admin     │   │
+                    │  │ (Students/  │ │ (Staff/     │   │
+                    │  │  Staff)     │ │ Management) │   │
+                    │  └─────────────┘ └─────────────┘   │
+                    └─────────────────────────────────────┘
+                              │
+                              ▼
+                    ┌─────────────────────────────────────┐
+                    │      LOST & FOUND SYSTEM            │
+                    │                                     │
+                    │  • User Management                  │
+                    │  • Item Reporting                   │
+                    │  • Matching Algorithm               │
+                    │  • Admin Review                     │
+                    │  • Notification System              │
+                    └─────────────────────────────────────┘
+                              │
+                              ▼
+                    ┌─────────────────────────────────────┐
+                    │         DATA STORES                 │
+                    │                                     │
+                    │  ┌─────────────┐ ┌─────────────┐   │
+                    │  │   Users     │ │ Lost Items  │   │
+                    │  │  Database   │ │  Database   │   │
+                    │  └─────────────┘ └─────────────┘   │
+                    │  ┌─────────────┐ ┌─────────────┐   │
+                    │  │Found Items │ │  Matched    │   │
+                    │  │ Database   │ │  Items DB   │   │
+                    │  └─────────────┘ └─────────────┘   │
+                    └─────────────────────────────────────┘
+
+LEVEL 1 DFD - SYSTEM OVERVIEW
+=============================
+
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│    User     │    │   Admin     │    │   System    │
+│ (Students/  │    │ (Staff/     │    │ (Automatic) │
+│  Staff)     │    │ Management) │    │             │
+└─────────────┘    └─────────────┘    └─────────────┘
+       │                   │                   │
+       ▼                   ▼                   ▼
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   User      │    │   Admin     │    │  Matching   │
+│Management   │    │ Dashboard   │    │ Algorithm   │
+│Processes    │    │ Processes   │    │             │
+└─────────────┘    └─────────────┘    └─────────────┘
+       │                   │                   │
+       ▼                   ▼                   ▼
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Item      │    │   Match     │    │   Match     │
+│Reporting    │    │  Review     │    │ Generation  │
+│Processes    │    │ Processes   │    │             │
+└─────────────┘    └─────────────┘    └─────────────┘
+       │                   │                   │
+       ▼                   ▼                   ▼
+┌─────────────────────────────────────────────────────┐
+│                    DATA STORES                      │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │
+│  │   Users     │ │ Lost Items  │ │Found Items │  │
+│  │  Database   │ │  Database   │ │ Database   │  │
+│  └─────────────┘ └─────────────┘ └─────────────┘  │
+│  ┌─────────────┐                                  │
+│  │  Matched    │                                  │
+│  │  Items DB   │                                  │
+│  └─────────────┘                                  │
+└─────────────────────────────────────────────────────┘
+
+LEVEL 2 DFD - DETAILED PROCESSES
+================================
+
+1. USER MANAGEMENT FLOW
+=======================
+
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│    User     │───▶│ Registration│───▶│   Users     │
+│  Input      │    │   Process   │    │   Table     │
+└─────────────┘    └─────────────┘    └─────────────┘
+                              │
+                              ▼
+                    ┌─────────────┐    ┌─────────────┐
+                    │   Login     │───▶│  Session    │
+                    │  Process    │    │  Creation   │
+                    └─────────────┘    └─────────────┘
+
+2. ITEM REPORTING FLOW
+======================
+
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│    User     │───▶│ Lost Item   │───▶│ Lost Items  │
+│  Input      │    │  Report     │    │   Table     │
+└─────────────┘    └─────────────┘    └─────────────┘
+
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│    User     │───▶│ Found Item  │───▶│Found Items  │
+│  Input      │    │  Report     │    │   Table     │
+└─────────────┘    └─────────────┘    └─────────────┘
+
+3. MATCHING ALGORITHM FLOW
+==========================
+
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ Lost Items  │───▶│  Matching   │───▶│  Matched    │
+│   Table     │    │ Algorithm   │    │   Items     │
+└─────────────┘    └─────────────┘    └─────────────┘
+       │                   │                   │
+       ▼                   ▼                   ▼
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│Found Items  │───▶│  Similarity │───▶│   Status    │
+│   Table     │    │   Check     │    │  = Pending  │
+└─────────────┘    └─────────────┘    └─────────────┘
+
+4. ADMIN REVIEW FLOW
+====================
+
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Matched    │───▶│   Admin     │───▶│   Match     │
+│   Items     │    │   Review    │    │  Decision   │
+│(Pending)    │    │  Process    │    │             │
+└─────────────┘    └─────────────┘    └─────────────┘
+                              │
+                              ▼
+                    ┌─────────────┐    ┌─────────────┐
+                    │ Accept/     │───▶│  Update     │
+                    │  Reject     │    │   Status    │
+                    └─────────────┘    └─────────────┘
+
+5. USER NOTIFICATION FLOW
+=========================
+
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Matched    │───▶│   User      │───▶│  Contact    │
+│   Items     │    │ Dashboard   │    │Information  │
+│(Accepted)   │    │  Display    │    │  Access     │
+└─────────────┘    └─────────────┘    └─────────────┘
+
+COMPLETE SYSTEM FLOW DIAGRAM
+============================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        USER REGISTRATION                        │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                         USER LOGIN                              │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    ITEM REPORTING PROCESS                       │
+│                                                                 │
+│  ┌─────────────┐                    ┌─────────────┐            │
+│  │   Lost      │                    │   Found     │            │
+│  │ Item Form   │                    │ Item Form   │            │
+│  └─────────────┘                    └─────────────┘            │
+│         │                                 │                    │
+│         ▼                                 ▼                    │
+│  ┌─────────────┐                    ┌─────────────┐            │
+│  │ Lost Items  │                    │Found Items  │            │
+│  │  Database   │                    │ Database    │            │
+│  └─────────────┘                    └─────────────┘            │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    AUTOMATIC MATCHING                           │
+│                                                                 │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │ Lost Items  │───▶│  Matching   │───▶│  Matched    │        │
+│  │  Database   │    │ Algorithm   │    │   Items     │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│         │                                 │                    │
+│         ▼                                 ▼                    │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │Found Items  │───▶│  Similarity │───▶│   Status    │        │
+│  │ Database    │    │   Check     │    │  = Pending  │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      ADMIN REVIEW                               │
+│                                                                 │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │  Matched    │───▶│   Admin     │───▶│   Match     │        │
+│  │   Items     │    │   Review    │    │  Decision   │        │
+│  │(Pending)    │    │  Process    │    │             │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│                              │                                 │
+│                              ▼                                 │
+│                    ┌─────────────┐    ┌─────────────┐        │
+│                    │ Accept/     │───▶│  Update     │        │
+│                    │  Reject     │    │   Status    │        │
+│                    └─────────────┘    └─────────────┘        │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    USER NOTIFICATION                            │
+│                                                                 │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │  Matched    │───▶│   User      │───▶│  Contact    │        │
+│  │   Items     │    │ Dashboard   │    │Information  │        │
+│  │(Accepted)   │    │  Display    │    │  Access     │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+└─────────────────────────────────────────────────────────────────┘
+
+DATA DICTIONARY
+===============
+
+EXTERNAL ENTITIES:
+------------------
+1. User (Students/Staff)
+   - Description: Individuals who report lost or found items
+   - Input: Registration data, item details, login credentials
+   - Output: Match notifications, status updates, contact information
+
+2. Admin (Staff/Management)
+   - Description: System administrators who review and approve matches
+   - Input: Match approval/rejection decisions
+   - Output: Status updates, system management actions
+
+PROCESSES:
+----------
+1. User Management Process
+   - Function: Handle user registration, login, and authentication
+   - Input: User registration data, login credentials
+   - Output: User accounts, session information
+
+2. Item Reporting Process
+   - Function: Process lost and found item submissions
+   - Input: Item details, descriptions, locations, dates
+   - Output: Item records in database
+
+3. Matching Algorithm Process
+   - Function: Automatically identify potential matches
+   - Input: Lost and found item data
+   - Output: Potential match records with pending status
+
+4. Admin Review Process
+   - Function: Review and approve/reject potential matches
+   - Input: Pending match records
+   - Output: Approved/rejected match status
+
+5. User Notification Process
+   - Function: Notify users of match status changes
+   - Input: Match status updates
+   - Output: Dashboard updates, contact information access
+
+DATA STORES:
+------------
+1. Users Database
+   - Content: User account information
+   - Fields: id, fullname, email, phone, password, created_at
+
+2. Lost Items Database
+   - Content: Lost item reports
+   - Fields: id, user_id, item_name, description, date_lost, location
+
+3. Found Items Database
+   - Content: Found item reports
+   - Fields: id, user_id, item_name, description, date_found, location
+
+4. Matched Items Database
+   - Content: Match records with status
+   - Fields: id, lost_item_id, found_item_id, status, matched_on
+
+DATA FLOWS:
+-----------
+1. User Input Flows:
+   - Registration data → User Management Process
+   - Login credentials → Authentication Process
+   - Item details → Item Reporting Process
+
+2. System Output Flows:
+   - Match notifications → User Dashboard
+   - Status updates → User Interface
+   - Contact information → Approved Users
+
+3. Admin Input Flows:
+   - Match decisions → Admin Review Process
+   - System management → Administrative Interface
+
+4. Database Operations:
+   - CRUD operations on all tables
+   - Data validation and integrity checks
+   - Transaction management
+
+KEY DATA FLOW CHARACTERISTICS:
+-----------------------------
+- Bidirectional: Data flows both ways between users and system
+- Real-time: Immediate processing of user inputs
+- Automated: Matching algorithm runs automatically
+- Secure: Authentication and authorization at each step
+- Auditable: All actions are logged and trackable
