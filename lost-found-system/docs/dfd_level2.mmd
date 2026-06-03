@@ -1,0 +1,36 @@
+flowchart TB
+  %% Level 2 DFD (selected processes)
+
+  subgraph P1["P1: User Management"]
+    EE01_1["EE-01 User"] -->|DF-01 Reg/Login| P1_Proc("Validate & Auth")
+    P1_Proc -->|DF-02 Create| DS1[("DS1 Users")]
+    P1_Proc -->|DF-04 Session/Ack| EE01_1
+  end
+
+  subgraph P2["P2: Item Reporting"]
+    EE01_2["EE-01 User"] -->|DF-05 Lost| P2_L("Validate Lost")
+    P2_L -->|DF-06| DS2[("DS2 Lost Items")]
+    EE01_2 -->|DF-07 Found| P2_F("Validate Found")
+    P2_F -->|DF-08| DS3[("DS3 Found Items")]
+    P2_L -->|DF-09 Ack| EE01_2
+    P2_F -->|DF-09 Ack| EE01_2
+  end
+
+  subgraph P3["P3: Matching Engine"]
+    DS2 -->|DF-10 New Lost| P3_M("Similarity Compute")
+    DS3 -->|DF-11 New Found| P3_M
+    P3_M -->|DF-12 Candidates| DS4[("DS4 Matches")]
+  end
+
+  subgraph P4["P4: Admin Review"]
+    DS4 -->|DF-13 Pending| P4_R("Verify & Decide")
+    EE02["EE-02 Admin"] -->|DF-19 Decisions| P4_R
+    P4_R -->|DF-14 Update| DS4
+  end
+
+  subgraph P5["P5: Notifications"]
+    DS4 -->|DF-16 Status change| P5_N("Dispatch Notifications")
+    P5_N -->|DF-17| EE03["EE-03 Email/SMS"]
+    P5_N -->|DF-18 Dashboards| EE01_3["EE-01 User"]
+  end
+

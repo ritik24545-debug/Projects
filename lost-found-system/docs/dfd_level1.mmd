@@ -1,0 +1,39 @@
+flowchart LR
+  %% Level 1 DFD
+  EE01["EE-01 User"]
+  EE02["EE-02 Admin"]
+  EE03["EE-03 Email/SMS Gateway"]
+
+  P1("P1 User Management")
+  P2("P2 Item Reporting")
+  P3("P3 Matching Engine")
+  P4("P4 Admin Review")
+  P5("P5 Notifications")
+
+  DS1[("DS1 Users")] 
+  DS2[("DS2 Lost Items")] 
+  DS3[("DS3 Found Items")] 
+  DS4[("DS4 Matches")] 
+
+  EE01 -- "DF-01/03" --> P1
+  P1 -- "DF-02" --> DS1
+  P1 -- "DF-04" --> EE01
+
+  EE01 -- "DF-05/07" --> P2
+  P2 -- "DF-06" --> DS2
+  P2 -- "DF-08" --> DS3
+  P2 -- "DF-09" --> EE01
+
+  DS2 -- "DF-10" --> P3
+  DS3 -- "DF-11" --> P3
+  P3 -- "DF-12" --> DS4
+
+  DS4 -- "DF-13 (Pending)" --> P4
+  EE02 -- "DF-19" --> P4
+  P4 -- "DF-14" --> DS4
+  P4 -- "DF-15" --> EE02
+
+  DS4 -- "DF-16 Status change" --> P5
+  P5 -- "DF-17" --> EE03
+  P5 -- "DF-18" --> EE01
+

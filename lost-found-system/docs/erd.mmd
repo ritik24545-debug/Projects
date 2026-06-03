@@ -1,0 +1,45 @@
+erDiagram
+  USERS {
+    INT id PK
+    VARCHAR fullname
+    VARCHAR email UNIQUE
+    VARCHAR username UNIQUE
+    VARCHAR phone
+    VARCHAR aadhar
+    VARCHAR password
+    TIMESTAMP created_at
+  }
+
+  LOST_ITEMS {
+    INT id PK
+    INT user_id FK
+    VARCHAR item_name
+    TEXT description
+    DATE date_lost
+    VARCHAR location
+    TIMESTAMP created_at
+  }
+
+  FOUND_ITEMS {
+    INT id PK
+    INT user_id FK
+    VARCHAR item_name
+    TEXT description
+    DATE date_found
+    VARCHAR location
+    TIMESTAMP created_at
+  }
+
+  MATCHED_ITEMS {
+    INT id PK
+    INT lost_item_id FK
+    INT found_item_id FK
+    TINYINT status "0=Pending,1=Accepted,2=Rejected"
+    TIMESTAMP matched_on
+  }
+
+  USERS ||--o{ LOST_ITEMS : reports
+  USERS ||--o{ FOUND_ITEMS : reports
+  LOST_ITEMS ||--o{ MATCHED_ITEMS : matches
+  FOUND_ITEMS ||--o{ MATCHED_ITEMS : matches
+

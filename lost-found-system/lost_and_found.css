@@ -1,0 +1,112 @@
+body {
+  /* Soft pastel gradient background */
+  background: linear-gradient(135deg, #f8e1f4 0%, #c7e9f1 100%);
+  background-attachment: fixed;
+}
+header {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 24px 0 12px 0;
+  text-align: center;
+  border-radius: 18px 18px 18px 18px;
+  margin-bottom: 32px;
+}
+
+header h1 {
+  margin: 0 0 8px 0;
+  font-size: 2.2rem;
+  color: #6a3fa0;
+  font-family: Moderne Sans, sans-serif;
+  font-weight: 700;
+}
+
+header nav {
+  font-size: 1.1rem;
+  margin-top: 4px;
+}
+
+header nav a {
+  color: #3a6ea5;
+  text-decoration: none;
+  margin: 0 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+header nav a:hover,
+header nav a:focus {
+  background: #e3eafc;
+  color: #1d3557;
+  text-decoration: underline;
+}
+main {
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(106,63,160,0.07);
+  padding: 32px 28px 24px 28px;
+}
+
+main h2 {
+  color: #3a6ea5;
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+main p {
+  color: #444;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+footer {
+  text-align: center;
+  color: #888;
+  font-size: 0.98rem;
+  margin-bottom: 12px;
+  margin-top: 32px;
+}
+
+a {
+  color: #3a6ea5;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover, a:focus {
+  color: #6a3fa0;
+  text-decoration: underline;
+}
+
+/* Navigation Menu */
+header nav a {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border: 1px solid transparent;
+}
+
+header nav a.active,
+header nav a[aria-current="page"] {
+  background: #c7e9f1;
+  color: #6a3fa0;
+  border-color: #b6d6e2;
+  text-decoration: none;
+}
+
+header nav a:active {
+  background: #e1d7f8;
+  color: #3a6ea5;
+}
+/* Main Content */
+main {
+  background: #e8eff5;
+  padding: 32px 18px 24px 18px;
+  border-radius: 10px;
+  max-width: 700px;
+  margin: 32px auto 0 auto;
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff, inset 4px 4px 8px rgba(209, 217, 230, 0.2), inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

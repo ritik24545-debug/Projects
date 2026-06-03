@@ -1,0 +1,35 @@
+flowchart LR
+  %% Level 0 Context DFD
+  %% Entities
+  EE01["EE-01 User"]
+  EE02["EE-02 Admin"]
+  EE03["EE-03 Email/SMS Gateway"]
+
+  %% System
+  S("Lost & Found System")
+
+  %% Conceptual Stores (shown as notes)
+  DS1[("DS1 Users")]
+  DS2[("DS2 Lost Items")]
+  DS3[("DS3 Found Items")]
+  DS4[("DS4 Matches")]
+
+  %% Flows
+  EE01 -- "DF-01/05/07\nRegistration & Reports" --> S
+  EE02 -- "DF-19\nAdmin Actions" --> S
+  S -- "DF-17/18\nNotifications" --> EE03
+  S -- "DF-04\nSessions/Status" --> EE01
+
+  %% Visual grouping (optional)
+  subgraph Conceptual Data Stores
+    DS1
+    DS2
+    DS3
+    DS4
+  end
+
+  S --- DS1
+  S --- DS2
+  S --- DS3
+  S --- DS4
+
